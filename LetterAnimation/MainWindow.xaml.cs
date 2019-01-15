@@ -38,6 +38,7 @@ namespace LetterAnimation
             
             if (text == "")
             {
+                DeleteEffectsFromAllChars(TextViewer);
                 TextViewer.Text = text.ToUpper();
                 return;
             }
@@ -46,6 +47,14 @@ namespace LetterAnimation
             else
                 AddEffectToLastChar(TextViewer, text);
             TextViewer.Text = text.ToUpper();
+        }
+        private void DeleteEffectsFromAllChars(TextBlock element)
+        {
+            Storyboard.SetTargetProperty(JumpAnimation, new PropertyPath("TextEffects[0].Transform.Children[0].Y"));
+            Storyboard.SetTargetProperty(RotateAnimation, new PropertyPath("TextEffects[0].Transform.Children[1].Angle"));
+            var _tmp = element.TextEffects[0];
+            element.TextEffects.Clear();
+            element.TextEffects.Add(_tmp);
         }
         private void DeleteEffectFromLastChar(TextBlock element, string text)
         {
